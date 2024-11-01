@@ -1,13 +1,29 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    docker-compose.yml                                 :+:      :+:    :+:    #
+#    docker-compose.yaml                                :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/10/28 11:38:42 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/01 17:47:44 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+services:
+  frontend:
+    image: example/webapp
+    ports:
+      - "443:8043"
+    networks:
+      - front-tier
+      - back-tier
+    configs:
+      - httpd-config
+    secrets:
+      - server-certificate
 
+  backend:
+    image: example/database
+    volumes:
+      - db-data:/etc/data
