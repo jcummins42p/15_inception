@@ -6,24 +6,65 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/01 17:47:44 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/04 21:34:45 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 services:
-  frontend:
-    image: example/webapp
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx/.
     ports:
-      - "443:8043"
-    networks:
-      - front-tier
-      - back-tier
-    configs:
-      - httpd-config
-    secrets:
-      - server-certificate
-
-  backend:
-    image: example/database
+      - "443:443"
+    depends_on:
+      - wordpress
     volumes:
-      - db-data:/etc/data
+      - wordpress:/var/www/html
+    networks:
+      - docker-network
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/.
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - docker-network
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/.
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - docker-network
+    restart: always
+
+volumes:
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      device: /home/jcummins/data/wordpress
+      o: bind
+      type: none
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      device: /home/jcummins/data/mariadb
+      o: bind
+      type: none
+
+networks:
+  inception:
+    name: docker-network
+

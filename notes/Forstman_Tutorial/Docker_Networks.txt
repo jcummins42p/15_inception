@@ -1,0 +1,25 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Forstman_tutorial.txt                              :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/04 19:16:30 by jcummins          #+#    #+#              #
+#    Updated: 2024/11/04 19:20:58 by jcummins         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+What are docker networks?
+- a network is a virtual software defined network that connects Docker containers. It allows containers to communicate with each other and the outside world, and it provides an additional layer of abstraction over the underlying network infrastructure.
+
+- There are several types of networks that you can create in Docker, including:
+	- Bridge: the default network type. Allows containers to comunicate with each other and the host machine, but provides no access to the outside world.
+	- Host: Uses the host machine's network stack and provides no isolation between the host and the container.
+	- Overlay: Allows containers running on different Docker hosts to communicate with each other.
+	- Macvlan: Allows a container to have its own IP address on the same subnet as the host machine.
+
+You can create and manage networks using the docker network command
+
+E.g to create a new bridge network:
+	docker network create my-network

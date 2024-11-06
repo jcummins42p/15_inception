@@ -1,0 +1,20 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    OpenSSL.txt                                        :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/04 19:57:38 by jcummins          #+#    #+#              #
+#    Updated: 2024/11/04 20:10:29 by jcummins         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NGINX is a web server that can also be used as a reverse proxy, load balancer, and HTTP cache. It is know for high performance, stability, and low resource consumption.
+
+- It is often used to handle server-side requests for web applications
+- Can also be used to serve static content such as images and JavaScript files.
+- Can be configured to handle other network protocols:
+	- Secure Sockets Layer (SSL)
+	- Transport Layer Security (TLS)
+- Often used in conjunction with other software, such as databases and CMS
