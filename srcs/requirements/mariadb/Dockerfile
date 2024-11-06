@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 16:13:31 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/06 18:53:12 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/06 19:50:54 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ FROM debian:12
 RUN apt-get update
 RUN apt-get upgrade
 RUN apt-get install -y mariadb-server
+RUN rm -rf /var/lib/apt/lists*	# cleans package list to reduce image size
 
 EXPOSE 3306
 
@@ -24,5 +25,5 @@ LABEL description="mariadb"
 HEALTHCHECK --start-period=5m \
 	CMD mariadb -e 'SELECT @@datadir;' || exit 1
 
-CMD ["mariadbd"]
+CMD ["mysqld"]
 
