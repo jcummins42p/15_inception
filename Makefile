@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/06 19:05:05 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/07 19:16:12 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,27 +17,35 @@ all: $(NAME)
 
 $(NAME):
 	@echo "Building docker project $(NAME)"
-	sudo docker compose -f ./srcs/docker-compose.yaml up --build -d
+	docker compose -f ./srcs/docker-compose.yaml up --build -d
 
 status:
-	@echo "DOCKER CONTAINERS:"
-	@sudo docker ps -a
-	@echo "DOCKER IMAGES:"
-	@sudo docker images
+	@echo ">> DOCKER CONTAINERS:"
+	@docker ps -a
+	@echo ">> DOCKER IMAGES:"
+	@docker images
+	@echo ">> DOCKER VOLUMES:"
+	@docker volume ls
 
 nginx_shell:
-	sudo docker exec -it nginx /bin/bash
+	docker exec -it nginx /bin/bash
 
 wp_shell:
-	sudo docker exec -it wordpress /bin/bash
+	docker exec -it wordpress /bin/bash
 
 clean:
 	@echo "Stopping services"
-	sudo docker stop $(shell sudo docker ps -aq)
+	docker stop $(shell sudo docker ps -aq)
 	@echo "Removing unused images"
-	sudo docker system prune --force
+	docker system prune --force
 
 fclean: clean
-	sudo docker system prune --all --force --volumes
+	docker system prune --all --force --volumes
+
+vclean:
+	docker volume rm $(docker volume ls -q)
+
+iclean:
+	docker rmi -f $(docker images -q)
 
 phony: clean fclean wp_shell nginx_shell
