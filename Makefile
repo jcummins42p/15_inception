@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/07 19:16:12 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/07 19:27:07 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,14 @@ status:
 	@echo ">> DOCKER VOLUMES:"
 	@docker volume ls
 
-nginx_shell:
+shell_ng:
 	docker exec -it nginx /bin/bash
 
-wp_shell:
+shell_wp:
 	docker exec -it wordpress /bin/bash
+
+shell_db:
+	docker exec -it mariadb /bin/bash
 
 clean:
 	@echo "Stopping services"
