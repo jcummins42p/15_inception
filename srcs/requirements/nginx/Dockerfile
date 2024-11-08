@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 16:13:31 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/07 19:22:48 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/08 16:24:34 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 		-subj "/C=CZ/ST=Prague/L=Prague/O=42_School/OU=jcummins42/CN=jcummins/"
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d/ssl.conf
-COPY html/index.html /usr/share/nginx/html/index.html
+#COPY html/index.html /usr/share/nginx/html/index.html
 COPY default /etc/nginx/sites-available/.
 
 RUN mkdir -p /run/nginx

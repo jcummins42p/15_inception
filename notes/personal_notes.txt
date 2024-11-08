@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/05 15:18:49 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/06 12:53:13 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/08 13:16:03 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,3 +36,6 @@ remove specific stopped containers
 
 run an instance of an image in the background (-d) with port mapped to host.
 	-sudo docker run -d -p 80:80 -p 443:443 nginx-html
+
+force linux to correct the time and date on the VM because when you restart it is stuck at where you closed it.
+	sudo ntpdate -s time.nist.gov

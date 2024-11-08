@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/07 19:27:07 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/08 18:28:11 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,19 +36,22 @@ shell_wp:
 shell_db:
 	docker exec -it mariadb /bin/bash
 
-clean:
+fclean: stop iclean vclean
+
+stop:
 	@echo "Stopping services"
 	docker stop $(shell sudo docker ps -aq)
+
+clean:
 	@echo "Removing unused images"
 	docker system prune --force
 
-fclean: clean
-	docker system prune --all --force --volumes
-
 vclean:
+	@echo "Removing docker volumes"
 	docker volume rm $(docker volume ls -q)
 
 iclean:
+	@echo "Removing docker images"
 	docker rmi -f $(docker images -q)
 
 phony: clean fclean wp_shell nginx_shell

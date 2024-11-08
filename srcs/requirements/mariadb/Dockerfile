@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 16:13:31 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/06 19:50:54 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/08 18:31:21 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,5 +25,5 @@ LABEL description="mariadb"
 HEALTHCHECK --start-period=5m \
 	CMD mariadb -e 'SELECT @@datadir;' || exit 1
 
-CMD ["mysqld"]
+CMD ["mysqld", "-F"]
 
