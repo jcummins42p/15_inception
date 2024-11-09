@@ -6,13 +6,14 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/08 15:12:43 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/09 21:11:43 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 services:
   nginx:
     container_name: nginx
+    hostname: inception_nginx
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
@@ -28,31 +29,42 @@ services:
 
   mariadb:
     container_name: mariadb
+    hostname: inception_mdb
+    env_file:
+      - .env
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
-      args:
-        MDB_NAME: ${DB_NAME}
-        MDB_USER: ${DB_USER}
-        MDB_PASS: ${DB_PASS}
-        MDB_ROOT: ${DB_ROOT}
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT}
     volumes:
       - mariadb_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
       - inception
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     restart: unless-stopped
 
   wordpress:
     container_name: wordpress
+    hostname: inception_wp
+    env_file:
+      - .env
     build:
       context: ./requirements/wordpress/
       dockerfile: Dockerfile
-      args:
-        WPDB_NAME: ${WP_NAME}
-        WPDB_USER: ${WP_USER}
-        WPDB_PASS: ${WP_PASS}
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
     depends_on:
       - mariadb
     volumes:

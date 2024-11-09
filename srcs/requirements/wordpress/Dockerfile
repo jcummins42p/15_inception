@@ -6,13 +6,12 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:03:10 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/08 18:15:44 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/09 22:57:43 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+#	WORDPRESS
 FROM debian:12
-
-ARG WP_NAME WP_USER WP_PASS
 
 #	apt-get is more stable and less likely to break automated processes
 #	it is more commonly used in sever environments and scripts because it is older
@@ -49,11 +48,11 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	php-xml \
 	php-redis \
 	wget \
-	unzip
+	unzip \
+	default-mysql-client \
+	iputils-ping \
+	vim
 RUN	rm -rf /var/lib/apt/lists/* && apt-get clean
-RUN	apt-get clean
-
-COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/.
 
 WORKDIR /var/www
 
@@ -61,7 +60,26 @@ RUN	wget https://wordpress.org/latest.zip && unzip latest.zip
 RUN mv wordpress/* .
 RUN rm -rf latest.zip wordpress
 
+RUN mkdir -p /var/www/html && \
+    chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html
+
+COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/.
+COPY --chown=www-dat:www-data ./conf/wp-config.php /var/www/html/wp-config.php
+
+#	mv doesn't work, how annoying. and the COPY command will NOT copy to html
+#RUN cp wp-config.php html
+
+#	www-data is the user that wordpress typically runs under
+RUN chown -R www-data:www-data ./html && \
+	chmod -R 755 ./html && \
+	find ./html -type f -exec chmod 644 {} \;
+
+#	this should already be done but it's nonsense and I don't want to risk it
+RUN chown www-data:www-data ./html/wp-config.php && \
+	chmod 644 ./html/wp-config.php
+
 #	the -F flag tells the command to run in the foreground as process ID 1
 #	without this, the container will close since they are designed to run PID 1
 #	essentially the opposite of -d (Daemon/background) or -d detached mode for docker
-CMD ["/usr/sbin/php-fpm8.2", "-F"]
+CMD ["php-fpm8.2", "-F"]

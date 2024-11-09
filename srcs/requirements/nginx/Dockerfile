@@ -6,11 +6,11 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 16:13:31 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/08 16:24:34 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/09 21:17:26 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#	defines which base os to use
+#	NGINX
 FROM debian:12
 
 # install nginx and ssl
@@ -19,6 +19,7 @@ RUN apt-get install -y nginx
 RUN apt-get install -y openssl
 RUN apt-get install -y net-tools
 RUN apt-get install -y vim
+RUN	rm -rf /var/lib/apt/lists/* && apt-get clean
 
 RUN mkdir /etc/nginx/ssl
 # self-generates the SSL certificate, initializing the variables
@@ -37,7 +38,6 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 		-subj "/C=CZ/ST=Prague/L=Prague/O=42_School/OU=jcummins42/CN=jcummins/"
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d/ssl.conf
-#COPY html/index.html /usr/share/nginx/html/index.html
 COPY default /etc/nginx/sites-available/.
 
 RUN mkdir -p /run/nginx
@@ -50,4 +50,5 @@ LABEL description="nginx"
 
 #CMD ["nginx"]
 CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-F"] - this didn't work :(
 
