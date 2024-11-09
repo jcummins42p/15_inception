@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 16:13:31 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/09 21:17:38 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/10 00:18:20 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,4 +31,4 @@ EXPOSE 3306
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-#	note for posterity - getting this database to behave was the most annoying thing imaginable. I couldn't even log in as root to see what the permissions problem was. Absolutely infuriating. Currently trying to install gosu so that I can run it as sudo on the entrypoint script. How can this be intended behaviour? 
+#	note for posterity - getting this database to behave was the most annoying thing imaginable. I couldn't even log in as root to see what the permissions problem was. Absolutely infuriating. Currently trying to install gosu so that I can run it as sudo on the entrypoint script. How can this be intended behaviour?

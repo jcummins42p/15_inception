@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/09 21:11:43 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/10 00:16:25 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
     depends_on:
       - mariadb
-    volumes:
-      - wordpress_data:/var/www/html
+    #volumes:
+      #- wordpress_data:/var/www/html
     networks:
       - inception
     restart: unless-stopped

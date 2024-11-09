@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:03:10 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/09 22:57:43 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/10 00:14:17 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,12 +60,11 @@ RUN	wget https://wordpress.org/latest.zip && unzip latest.zip
 RUN mv wordpress/* .
 RUN rm -rf latest.zip wordpress
 
-RUN mkdir -p /var/www/html && \
-    chown -R www-data:www-data /var/www/html && \
+RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/.
-COPY --chown=www-dat:www-data ./conf/wp-config.php /var/www/html/wp-config.php
+COPY ./conf/wp-config.php /var/www/html/
 
 #	mv doesn't work, how annoying. and the COPY command will NOT copy to html
 #RUN cp wp-config.php html

@@ -5,7 +5,7 @@ set -e
 
 # Initialize the database if not already initialized
 # conditional expressions in square brackets [ -n ] and spaces are neccesary
-# each keyword like if then else must start on a new line or follow a ; 
+# each keyword like if then else must start on a new line or follow a ;
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     echo "Initializing database..."
     mysqld --initialize-insecure
