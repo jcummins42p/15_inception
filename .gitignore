@@ -1,3 +1,4 @@
 secrets/
 aria_log*
 data/mariadb
+*.swp

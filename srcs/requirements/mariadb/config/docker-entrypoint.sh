@@ -3,6 +3,8 @@
 # This causes script to exit immediately if any command fails, to prevent issues
 set -e
 
+chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+
 # Initialize the database if not already initialized
 # conditional expressions in square brackets [ -n ] and spaces are neccesary
 # each keyword like if then else must start on a new line or follow a ;
@@ -47,4 +49,4 @@ echo "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}'@'%';" | "${mysql[@]}"
 echo 'FLUSH PRIVILEGES;' | "${mysql[@]}"
 
 # Start MariaDB in the foreground
-exec gosu mysql mysqld
+exec mysqld --user=mysql

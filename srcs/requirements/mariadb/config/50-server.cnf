@@ -7,6 +7,9 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
+user = mysql
+datadir = /var/lib/mysql
+socket = /run/mysqld/mysqld.sock
 
 #
 # * Basic Settings
