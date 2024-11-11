@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:03:10 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/10 18:25:13 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/11 18:04:18 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,11 +54,11 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	vim
 RUN	rm -rf /var/lib/apt/lists/* && apt-get clean
 
-WORKDIR /var/www
+WORKDIR /var/www/
 
 RUN	wget https://wordpress.org/latest.zip && unzip latest.zip
 RUN cp -r wordpress/* .
-RUN rm -rf latest.zip wordpress
+#RUN rm -rf latest.zip wordpress
 
 #RUN chown -R www-data:www-data /var/www/html && \
     #chmod -R 755 /var/www/html
@@ -66,13 +66,10 @@ RUN rm -rf latest.zip wordpress
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/.
 #COPY ./conf/wp-config.php /var/www/html/
 
-#	mv doesn't work, how annoying. and the COPY command will NOT copy to html
-#RUN cp wp-config.php html
-
 #	www-data is the user that wordpress typically runs under
 #RUN chown -R www-data:www-data ./html && \
-	#chmod -R 755 ./html && \
-	#find ./html -type f -exec chmod 644 {} \;
+#chmod -R 755 ./html && \
+#find ./html -type f -exec chmod 644 {} \;
 
 ##	this should already be done but it's nonsense and I don't want to risk it
 #RUN chown www-data:www-data ./html/wp-config.php && \

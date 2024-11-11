@@ -1,4 +1,5 @@
 secrets/
 aria_log*
-data/mariadb
+data/mariadb/*
 *.swp
+data/wordpress/*
