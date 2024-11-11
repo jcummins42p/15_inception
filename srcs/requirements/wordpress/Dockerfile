@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:03:10 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/11 18:04:18 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/11 21:30:55 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ RUN	rm -rf /var/lib/apt/lists/* && apt-get clean
 
 WORKDIR /var/www/
 
-RUN	wget https://wordpress.org/latest.zip && unzip latest.zip
+RUN	wget https://wordpress.org/latest.zip && unzip latest.zip && ls -la wordpress
+RUN touch why is this happennnnnnnnnning
 RUN cp -r wordpress/* .
 #RUN rm -rf latest.zip wordpress
 

@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/11 18:21:34 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/11 21:43:15 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ services:
       - "443:443"
     depends_on:
       - wordpress
-    #volumes:
-      #- wordpress_data:/var/www/
+    volumes:
+      - wordpress_data:/var/www/
     networks:
       - inception
     restart: unless-stopped
@@ -78,16 +78,17 @@ volumes:
     name: wordpress_data
     driver: local
     driver_opts:
+      o: bind
+      type: none
       device: /home/${USER}/data/wordpress
-      type: bind
   mariadb_data:
     name: mariadb_data
     driver: local
     driver_opts:
+      o: bind
+      type: none
       device: /home/${USER}/data/mariadb
-      type: bind
 
 networks:
   inception:
     driver: bridge
-
