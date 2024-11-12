@@ -6,14 +6,14 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/11 21:43:15 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/12 15:21:33 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 services:
   nginx:
     container_name: nginx
-    hostname: inception_nginx
+    hostname: nginx
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
@@ -29,17 +29,12 @@ services:
 
   mariadb:
     container_name: mariadb
-    hostname: inception_mdb
+    hostname: mariadb
     env_file:
       - .env
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT}
     volumes:
       - mariadb_data:/var/lib/mysql
     ports:
@@ -55,16 +50,12 @@ services:
 
   wordpress:
     container_name: wordpress
-    hostname: inception_wp
+    hostname: wordpress
     env_file:
       - .env
     build:
       context: ./requirements/wordpress/
       dockerfile: Dockerfile
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
     depends_on:
       - mariadb
     volumes:

@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/09 23:32:30 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/12 19:16:28 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ shell_wp:
 shell_db:
 	docker exec -it mariadb /bin/bash
 
-fclean: stop clean iclean vclean
+fclean: stop clean iclean vclean bclean
 
 stop:
 	@echo "Stopping services"
@@ -52,12 +52,21 @@ clean:
 	@docker system prune --force
 
 vclean:
-	@echo "Removing docker volumes"
+	@echo "vclean: clean up docker volumes"
+	@echo "> Removing docker volumes"
 	@docker volume ls -q | xargs -r docker volume rm -f || echo "> No docker volumes to remove"
 	@cd srcs && docker compose down -v
 
 iclean:
-	@echo "Removing docker images"
+	@echo "iclean: clean up unused docker images"
+	@echo "> Removing docker images"
 	@docker images -q | xargs -r docker rmi -f || echo "> No docker images to remove"
+
+bclean:
+	@echo "bclean: clean volume bindings"
+	@echo "> Removing mariadb files from ~/data/mariadb dir"
+	@sudo rm -rf ~/data/mariadb/*
+	@echo ">Removing wordpress install from ~/data/wordpress dir"
+	@sudo rm -f ~/data/wordpress/*
 
 .PHONY: stop clean fclean vclean iclean wp_shell nginx_shell shell_db shell_ng shell_wp
