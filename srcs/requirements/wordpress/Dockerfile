@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:03:10 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/11 21:30:55 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/13 18:08:06 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,29 +54,18 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	vim
 RUN	rm -rf /var/lib/apt/lists/* && apt-get clean
 
-WORKDIR /var/www/
-
-RUN	wget https://wordpress.org/latest.zip && unzip latest.zip && ls -la wordpress
-RUN touch why is this happennnnnnnnnning
-RUN cp -r wordpress/* .
-#RUN rm -rf latest.zip wordpress
-
-#RUN chown -R www-data:www-data /var/www/html && \
-    #chmod -R 755 /var/www/html
+RUN mkdir -p /var/www/ # make sure the directory exists
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/.
-#COPY ./conf/wp-config.php /var/www/html/
+COPY ./conf/wp-entrypoint.sh /usr/local/bin/
+COPY ./conf/wp-config.php /var/www/
+RUN chmod +x /usr/local/bin/wp-entrypoint.sh
 
-#	www-data is the user that wordpress typically runs under
-#RUN chown -R www-data:www-data ./html && \
-#chmod -R 755 ./html && \
-#find ./html -type f -exec chmod 644 {} \;
-
-##	this should already be done but it's nonsense and I don't want to risk it
-#RUN chown www-data:www-data ./html/wp-config.php && \
-	#chmod 644 ./html/wp-config.php
+WORKDIR /var/www/
 
 #	the -F flag tells the command to run in the foreground as process ID 1
 #	without this, the container will close since they are designed to run PID 1
 #	essentially the opposite of -d (Daemon/background) or -d detached mode for docker
+#	Having both entrypoint and cmd runs the entrypoint script with the cmd argument.
+ENTRYPOINT ["wp-entrypoint.sh"]
 CMD ["php-fpm8.2", "-F"]

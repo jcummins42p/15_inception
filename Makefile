@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/12 19:16:28 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/13 18:05:40 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ bclean:
 	@echo "bclean: clean volume bindings"
 	@echo "> Removing mariadb files from ~/data/mariadb dir"
 	@sudo rm -rf ~/data/mariadb/*
-	@echo ">Removing wordpress install from ~/data/wordpress dir"
-	@sudo rm -f ~/data/wordpress/*
+	@echo "> Removing wordpress install from ~/data/wordpress dir"
+	@sudo rm -rf ~/data/wordpress/*
 
 .PHONY: stop clean fclean vclean iclean wp_shell nginx_shell shell_db shell_ng shell_wp
