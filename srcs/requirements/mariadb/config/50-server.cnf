@@ -9,16 +9,14 @@
 [mysqld]
 user = mysql
 datadir = /var/lib/mysql
+basedir = /usr
 socket = /run/mysqld/mysqld.sock
 
 #
 # * Basic Settings
 #
 
-#user                    = mysql
 pid-file                = /run/mysqld/mysqld.pid
-basedir                 = /usr
-#datadir                 = /var/lib/mysql
 #tmpdir                  = /tmp
 
 # Broken reverse DNS slows down connections considerably and name resolve is
