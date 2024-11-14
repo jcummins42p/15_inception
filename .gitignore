@@ -3,3 +3,4 @@ aria_log*
 data/mariadb/*
 *.swp
 data/wordpress/*
+private/data

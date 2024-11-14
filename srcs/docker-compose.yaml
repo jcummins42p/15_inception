@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/12 15:21:33 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/14 18:54:47 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ services:
     volumes:
       - wordpress_data:/var/www/
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
 
   mariadb:
@@ -40,7 +40,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - inception
+      - docker-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
@@ -61,7 +61,7 @@ services:
     volumes:
       - wordpress_data:/var/www/
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
 
 volumes:
@@ -81,5 +81,5 @@ volumes:
       device: /home/${USER}/data/mariadb
 
 networks:
-  inception:
+  docker-network:
     driver: bridge
