@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/13 18:05:40 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/14 15:16:15 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,11 @@ status:
 	@docker images
 	@echo "\n>> DOCKER VOLUMES:"
 	@docker volume ls
+
+top:
+	@docker top nginx
+	@docker top mariadb
+	@docker top wordpress
 
 shell_ng:
 	docker exec -it nginx /bin/bash

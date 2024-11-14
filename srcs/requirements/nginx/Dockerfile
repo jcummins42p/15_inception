@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 16:13:31 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/10 12:14:38 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/14 13:03:20 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,12 @@
 FROM debian:12
 
 # install nginx and ssl
-RUN apt-get update
-RUN apt-get install -y nginx
-RUN apt-get install -y openssl
-RUN apt-get install -y net-tools
-RUN apt-get install -y vim
-RUN	rm -rf /var/lib/apt/lists/* && apt-get clean
+RUN apt-get update && \
+	apt-get install -y nginx openssl net-tools && \
+	rm -rf /var/lib/apt/lists/* && \
+	apt-get clean && \
+	mkdir /etc/nginx/ssl
 
-RUN mkdir /etc/nginx/ssl
 # self-generates the SSL certificate, initializing the variables
 # openssl req - starts the command
 # -newkey rsa:4096 generates a new RSA key of size 4096 bits

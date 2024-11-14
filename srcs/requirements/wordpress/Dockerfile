@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:03:10 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/13 18:08:06 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/14 14:58:50 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,12 +49,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 	php-redis \
 	wget \
 	unzip \
-	default-mysql-client \
-	iputils-ping \
-	vim
-RUN	rm -rf /var/lib/apt/lists/* && apt-get clean
-
-RUN mkdir -p /var/www/ # make sure the directory exists
+	gosu
+RUN	rm -rf /var/lib/apt/lists/* && apt-get clean && \
+	mkdir -p /var/www/ # make sure the directory exists
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/.
 COPY ./conf/wp-entrypoint.sh /usr/local/bin/
@@ -68,4 +65,4 @@ WORKDIR /var/www/
 #	essentially the opposite of -d (Daemon/background) or -d detached mode for docker
 #	Having both entrypoint and cmd runs the entrypoint script with the cmd argument.
 ENTRYPOINT ["wp-entrypoint.sh"]
-CMD ["php-fpm8.2", "-F"]
+CMD ["php-fpm8.2", "-F", "--nodaemonize"]

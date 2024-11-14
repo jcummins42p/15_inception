@@ -17,5 +17,8 @@ else
 	echo "> Wordpress install found, skipping download"
 fi
 
+touch /var/log/php8.2-fpm.log
+chown www-data:www-data /var/log/php8.2-fpm.log
+chown -R www-data:www-data /var/www/
 echo "Starting MariaDB in the foreground..."
 exec "$@"	# $@ = all of the command-line arguments to the shell script
