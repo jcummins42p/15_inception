@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/14 16:22:43 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/15 18:30:21 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo "Building docker project $(NAME)"
+	@cp /home/${USER}/data/secrets/.env srcs/
 	docker compose -f ./srcs/docker-compose.yaml up --build -d
 
 re:
@@ -53,7 +54,7 @@ shell_wp:
 shell_db:
 	docker exec -it mariadb /bin/bash
 
-fclean: stop clean iclean vclean bclean
+fclean: stop clean iclean vclean bclean eclean
 
 stop:
 	@echo "Stopping services"
@@ -62,6 +63,10 @@ stop:
 clean:
 	@echo "Removing unused images"
 	@docker system prune --force
+
+eclean:
+	@echo "Removing .env file from local directory"
+	@rm -f srcs/.env
 
 vclean:
 	@echo "vclean: clean up docker volumes"
@@ -81,4 +86,4 @@ bclean:
 	@echo "> Removing wordpress install from ~/data/wordpress dir"
 	@sudo rm -rf ~/data/wordpress/*
 
-.PHONY: stop clean fclean vclean iclean wp_shell nginx_shell shell_db shell_ng shell_wp
+.PHONY: stop clean fclean eclean bclean vclean iclean wp_shell nginx_shell shell_db shell_ng shell_wp

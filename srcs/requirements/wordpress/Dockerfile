@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:03:10 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/14 14:58:50 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/15 18:19:05 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ RUN	rm -rf /var/lib/apt/lists/* && apt-get clean && \
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/.
 COPY ./conf/wp-entrypoint.sh /usr/local/bin/
-COPY ./conf/wp-config.php /var/www/
+COPY ./conf/wp-config-gen.sh /var/www/
 RUN chmod +x /usr/local/bin/wp-entrypoint.sh
 
 WORKDIR /var/www/

@@ -12,7 +12,7 @@ if [ ! -d "/var/www/wordpress" ]; then
 	unzip latest.zip
 	cp -r wordpress/* .
 	rm -rf wordpress/* latest.zip
-	cp html/wp-config.php .
+	sh wp-config-gen.sh
 else
 	echo "> Wordpress install found, skipping download"
 fi
