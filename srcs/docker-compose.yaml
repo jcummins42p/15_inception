@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:38:00 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/14 18:54:47 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/15 17:16:45 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ services:
       - wordpress_data:/var/www/
     networks:
       - docker-network
-    restart: unless-stopped
+    restart: always
 
 volumes:
   wordpress_data:
