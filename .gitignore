@@ -4,3 +4,4 @@ data/mariadb/*
 *.swp
 data/wordpress/*
 private/data
+srcs/.env

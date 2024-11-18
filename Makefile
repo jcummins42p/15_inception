@@ -6,7 +6,7 @@
 #    By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:31:22 by jcummins          #+#    #+#              #
-#    Updated: 2024/11/15 18:30:21 by jcummins         ###   ########.fr        #
+#    Updated: 2024/11/15 18:42:16 by jcummins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,15 @@ SRCS = srcs
 
 all: $(NAME)
 
-$(NAME):
-	@echo "Building docker project $(NAME)"
+/srcs/.env:
+	@echo "Copying .env file from secrets"
 	@cp /home/${USER}/data/secrets/.env srcs/
+
+$(NAME): /srcs/.env
+	@echo "Building docker project $(NAME)"
 	docker compose -f ./srcs/docker-compose.yaml up --build -d
 
-re:
+re: /srcs/.env
 	@echo "Building docker project without cache"
 	docker compose -f ./srcs/docker-compose.yaml build --no-cache
 	docker compose -f ./srcs/docker-compose.yaml up -d
@@ -57,30 +60,30 @@ shell_db:
 fclean: stop clean iclean vclean bclean eclean
 
 stop:
-	@echo "Stopping services"
+	@echo "$@: Stopping services"
 	@docker stop $(shell docker ps -aq)
 
 clean:
-	@echo "Removing unused images"
+	@echo "$@: Removing unused images"
 	@docker system prune --force
 
 eclean:
-	@echo "Removing .env file from local directory"
+	@echo "$@: Removing .env file from local directory"
 	@rm -f srcs/.env
 
 vclean:
-	@echo "vclean: clean up docker volumes"
+	@echo "$@: clean up docker volumes"
 	@echo "> Removing docker volumes"
 	@docker volume ls -q | xargs -r docker volume rm -f || echo "> No docker volumes to remove"
 	@cd srcs && docker compose down -v
 
 iclean:
-	@echo "iclean: clean up unused docker images"
+	@echo "$@: clean up unused docker images"
 	@echo "> Removing docker images"
 	@docker images -q | xargs -r docker rmi -f || echo "> No docker images to remove"
 
 bclean:
-	@echo "bclean: clean volume bindings"
+	@echo "$@: clean volume bindings"
 	@echo "> Removing mariadb files from ~/data/mariadb dir"
 	@sudo rm -rf ~/data/mariadb/*
 	@echo "> Removing wordpress install from ~/data/wordpress dir"
